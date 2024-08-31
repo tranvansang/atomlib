@@ -48,11 +48,11 @@ class AtomProvider<T> extends StatefulWidget {
 }
 
 class _State<T> extends State<AtomProvider<T>> {
-  late StreamSubscription<T> subscription;
+  late StreamSubscription<T> _subscription;
 
   @override
   void initState() {
-    subscription = widget.atom.stream.listen((_) {
+    _subscription = widget.atom.stream.listen((_) {
       if (mounted) {
         setState(() {});
       }
@@ -62,7 +62,7 @@ class _State<T> extends State<AtomProvider<T>> {
 
   @override
   dispose() {
-    subscription.cancel();
+    _subscription.cancel();
     super.dispose();
   }
 
