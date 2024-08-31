@@ -18,10 +18,6 @@ class Atom<T> {
 
   Stream<T> get stream => _streamController.stream;
 
-  dispose() {
-    _streamController.close();
-  }
-
   T of(BuildContext context) {
     final state = context.dependOnInheritedWidgetOfExactType<AtomInheritedWidget<T>>();
     if (state == null) {
@@ -37,9 +33,7 @@ class AtomInheritedWidget<T> extends InheritedWidget {
   const AtomInheritedWidget({required this.value, super.key, required child}) : super(child: child);
 
   @override
-  bool updateShouldNotify(AtomInheritedWidget oldWidget) {
-    return true;
-  }
+  updateShouldNotify(oldWidget) => true;
 }
 
 class AtomProvider<T> extends StatefulWidget {
@@ -50,7 +44,7 @@ class AtomProvider<T> extends StatefulWidget {
   final Widget child;
 
   @override
-  createState() => _State();
+  createState() => _State<T>();
 }
 
 class _State<T> extends State<AtomProvider<T>> {
