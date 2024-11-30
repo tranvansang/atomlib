@@ -45,11 +45,11 @@ class AuthProvider extends StatelessWidget {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-		// wrap your app with AtomProvider
+    // wrap your app with AtomProvider
     home: AuthProvider(
       child: Builder(
         builder: (context) {
-          final account = context.watchAtom(accountAtom);
+          final account = accountAtom.of(context);
           if (account == null) {
             return Text('Not logged in');
           }
