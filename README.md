@@ -64,7 +64,7 @@ void main() {
 			// dispose: (controller) => controller.dispose(), // this is optional
       child: Builder(
         builder: (context) {
-          final myController = Atom.of<MyController>(context);
+          final myController = Atom.of<MyController>(context); // this `context` value will be passed to `create` function
           return ElevatedButton(
 						onPressed: () {
 							myController.increment();
