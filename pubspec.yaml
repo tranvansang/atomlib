@@ -1,7 +1,7 @@
 name: atomlib
 description: "Atom store library"
 version: 0.0.7
-homepage:
+homepage: https://github.com/tranvansang/atomlib
 environment:
   sdk: ^3.5.1
   flutter: ">=1.17.0"
