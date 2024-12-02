@@ -1,3 +1,8 @@
+## 0.0.7
+
+- Add `AtomProvider.listenable` to create a listenable atom.
+- Support `{bool listen}` in `Atom.Of<T>(context, {bool listen})` to get without watching for changes.
+
 ## 0.0.6
 
 - Update Readme

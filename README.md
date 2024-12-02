@@ -65,6 +65,7 @@ void main() {
       child: Builder(
         builder: (context) {
           final myController = Atom.of<MyController>(context); // this `context` value will be passed to `create` function
+          print('This will not be printed because myController never changes');
           return ElevatedButton(
             onPressed: () {
               myController.increment();
@@ -94,11 +95,12 @@ class MyController extends ChangeNotifier {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-    home: AtomProvider.readonly<MyController>(
-      create: (context) => MyController(),
+    home: AtomProvider.listenable<MyController>(
+      create: (context) => MyController(), // when use AtomProvider.listenable, create() must return a ChangeNotifier
       child: Builder(
         builder: (context) {
-          final myController = Atom.of<MyController>(context); // will listen to MyController.notifyListeners(). Note: only applicable to subclasses of ChangeNotifier, or precisely, subclass of Listenable
+          final myController = Atom.of<MyController>(context); // will listen to MyController.notifyListeners()
+          print('This will be printed when myController.notifyListeners() is called');
           return ElevatedButton(
             onPressed: () {
               myController.increment();
