@@ -29,16 +29,12 @@ class AtomProvider<T> extends StatelessWidget {
   AtomProvider({super.key, required this.child, required this.atom});
   final Widget child;
   final Atom<T> atom;
-  // AtomProvider.readonly({super.key, required this.child, required this.create, this.dispose});
+  static readonly({Key? key, required child, required create, dispose}) =>
+      _Readonly(key: key, child: child, create: create, dispose: dispose);
   @override
   build(_) {
     return ListenableBuilder(
-        listenable: atom,
-        builder: (_, __) => AtomInheritedWidget<T>(
-            value: (_) {
-              return atom.value;
-            },
-            child: child));
+        listenable: atom, builder: (_, __) => AtomInheritedWidget<T>(value: (_) => atom.value, child: child));
   }
 }
 
