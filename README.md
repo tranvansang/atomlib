@@ -24,7 +24,7 @@ final accountAtom = Atom<Account?>(null);
 // - set from any where: accountAtom.value = newValue
 // - get and listen from a descendant of AtomProvider: accountAtom.of(context)
 // - atom itself is a ChangeNotifier, so you can use it with ListenableBuilder(listenable: atom), atom.addListener(), atom.removeListener()
-// - to get thee nearest instance of Account atom, use Atom.of<Account?>(context)
+// - to get thee nearest instance of Account atom, use Atom.Of<Account?>(context)
 
 // declare provider
 class AuthProvider extends StatelessWidget {
