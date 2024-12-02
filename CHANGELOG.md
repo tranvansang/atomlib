@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Update Readme
+
 ## 0.0.5
 
 - Added `AtomProvider.readonly`.

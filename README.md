@@ -30,7 +30,7 @@ void main() {
   runApp(MaterialApp(
     // wrap your app with AtomProvider
     home: AtomProvider<Account?>(
-			atom: accountAtom,
+      atom: accountAtom,
       child: Builder(
         builder: (context) {
           final account = Atom.of<Account?>(context);
@@ -50,9 +50,9 @@ import 'package:atomlib/atomlib.dart';
 import 'package:flutter/material.dart';
 
 class MyController {
-	void increment() {
-		print('increment');
-	}
+  void increment() {
+    print('increment');
+  }
 }
 
 void main() {
@@ -61,16 +61,16 @@ void main() {
     // provide value. You can init once, and dispose, but you can't change the value
     home: AtomProvider.readonly<MyController>(
       create: (context) => MyController(), // this function is lazily called, and only called once.
-			// dispose: (controller) => controller.dispose(), // this is optional
+      // dispose: (controller) => controller.dispose(), // this is optional
       child: Builder(
         builder: (context) {
           final myController = Atom.of<MyController>(context); // this `context` value will be passed to `create` function
           return ElevatedButton(
-						onPressed: () {
-							myController.increment();
-						},
-						child: Text('Increment'),
-					);
+            onPressed: () {
+              myController.increment();
+            },
+            child: Text('Increment'),
+          );
         },
       ),
     ),
