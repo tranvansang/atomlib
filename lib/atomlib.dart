@@ -1,27 +1,21 @@
 library atomlib;
 
-import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 
-class Atom<T> {
+class Atom<T> extends ChangeNotifier {
   Atom(T value) : _value = value;
-  final _streamController = StreamController<T>.broadcast();
+
   T _value;
-
   T get value => _value;
-
   set value(T value) {
     _value = value;
-    _streamController.add(value);
+    notifyListeners();
   }
-
-  Stream<T> get stream => _streamController.stream;
 
   T of(BuildContext context) {
     final state = context.dependOnInheritedWidgetOfExactType<AtomInheritedWidget<T>>();
     if (state == null) {
-      throw Exception('Must be used within a AtomContainer');
+      throw Exception('Must be used within an AtomContainer');
     }
     return state.value;
   }
@@ -48,29 +42,13 @@ class AtomProvider<T> extends StatefulWidget {
 }
 
 class _State<T> extends State<AtomProvider<T>> {
-  late StreamSubscription<T> _subscription;
-
-  @override
-  void initState() {
-    _subscription = widget.atom.stream.listen((_) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  dispose() {
-    _subscription.cancel();
-    super.dispose();
-  }
-
   @override
   build(context) {
-    return AtomInheritedWidget<T>(
-      value: widget.atom.value,
-      child: widget.child,
-    );
+    return ListenableBuilder(
+        listenable: widget.atom,
+        builder: (_, __) => AtomInheritedWidget<T>(
+              value: widget.atom.value,
+              child: widget.child,
+            ));
   }
 }
