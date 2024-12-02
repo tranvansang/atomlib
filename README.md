@@ -23,7 +23,7 @@ final accountAtom = Atom<Account?>(null);
 // - get from any where: accountAtom.value
 // - set from any where: accountAtom.value = newValue
 // - atom itself is a ChangeNotifier, so you can use it with ListenableBuilder(listenable: atom), atom.addListener(), atom.removeListener()
-// - to get thee nearest instance of Account atom, use Atom.Of<Account?>(context)
+// - to get thee nearest instance of Account atom, use Atom.Of<Account?>(context, {bool listen})
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +65,40 @@ void main() {
       child: Builder(
         builder: (context) {
           final myController = Atom.of<MyController>(context); // this `context` value will be passed to `create` function
+          return ElevatedButton(
+            onPressed: () {
+              myController.increment();
+            },
+            child: Text('Increment'),
+          );
+        },
+      ),
+    ),
+  ));
+}
+```
+
+# Usage 3: Listenable atom
+
+```dart
+import 'package:atomlib/atomlib.dart';
+import 'package:flutter/material.dart';
+
+class MyController extends ChangeNotifier {
+  void increment() {
+    print('increment');
+    notifyListeners(); // notify all listeners, i.e., all widgets that call Atom.of<MyController>(context)
+  }
+}
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MaterialApp(
+    home: AtomProvider.readonly<MyController>(
+      create: (context) => MyController(),
+      child: Builder(
+        builder: (context) {
+          final myController = Atom.of<MyController>(context); // will listen to MyController.notifyListeners(). Note: only applicable to subclasses of ChangeNotifier, or precisely, subclass of Listenable
           return ElevatedButton(
             onPressed: () {
               myController.increment();
