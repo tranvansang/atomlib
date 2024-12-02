@@ -1,3 +1,7 @@
+## 0.0.5
+
+- Added `AtomProvider.readonly`.
+
 ## 0.0.4
 
 - New api `Atom.Of<T>(context)` to get the nearest instance of Atom atom.
