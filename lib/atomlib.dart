@@ -14,9 +14,7 @@ class Atom<T> extends ChangeNotifier {
 
   static T of<T>(BuildContext context) {
     final state = context.dependOnInheritedWidgetOfExactType<AtomInheritedWidget<T>>();
-    if (state == null) {
-      throw Exception('Must be used within an AtomContainer');
-    }
+    if (state == null) throw Exception('Must be used within an AtomContainer');
     return state.value;
   }
 }

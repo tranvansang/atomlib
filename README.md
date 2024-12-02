@@ -22,7 +22,6 @@ final accountAtom = Atom<Account?>(null);
 // an atom has the following methods
 // - get from any where: accountAtom.value
 // - set from any where: accountAtom.value = newValue
-// - get and listen from a descendant of AtomProvider: accountAtom.of(context)
 // - atom itself is a ChangeNotifier, so you can use it with ListenableBuilder(listenable: atom), atom.addListener(), atom.removeListener()
 // - to get thee nearest instance of Account atom, use Atom.Of<Account?>(context)
 
@@ -50,10 +49,8 @@ void main() {
     home: AuthProvider(
       child: Builder(
         builder: (context) {
-          final account = accountAtom.of(context);
-          if (account == null) {
-            return Text('Not logged in');
-          }
+          final account = Atom.of<Account?>(context);
+          if (account == null) return Text('Not logged in');
           return Text('Logged in as ${account.name}');
         },
       ),
